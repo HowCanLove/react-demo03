@@ -109,13 +109,40 @@ import ReactDOM from 'react-dom';
 
 import ContactsApp from "./ContactsApp";
 import "./ContactsApp.css";
-let contacts = [
-	{name: "kai1", email: "11111111111@qq.com"},
-	{name: "kai2", email: "22222222222@qq.com"},
-	{name: "kai3", email: "33333333333@qq.com"},
-	{name: "kai4", email: "44444444444@qq.com"},
-	{name: "kai5", email: "55555555555@qq.com"},
-	{name: "kai6", email: "66666666666@qq.com"},
-]
+import 'whatwg-fetch';
 
-ReactDOM.render(<ContactsApp contacts={contacts}/>, document.getElementById("root"));
+class ContactsAppContainer extends Component {
+	
+	constructor() {
+		super();
+		this.state = {
+			contacts: [],
+			obj:["qqq"]
+		}
+	}
+	componentDidMount(){
+		// let obj = this.state.obj;
+		// // obj.push(123,"sadf");
+
+		let obj = this.state.obj.concat(["qweqwe","1213"]);
+		this.setState({obj: obj});
+		fetch("./Contacts.json")
+			.then(response => response.json())
+			.then(responseData => {
+				console.log(this.state.obj);
+				this.setState({
+					contacts: responseData
+				})
+			})
+			.catch(error => {
+				console.log('Error fetch and parsing data', error)
+			})
+	}
+	render(){
+		return (
+				<ContactsApp contacts={this.state.contacts} />
+			)
+	}
+}
+
+ReactDOM.render(<ContactsAppContainer />, document.getElementById("root"));

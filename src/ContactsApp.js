@@ -74,7 +74,6 @@ class ContactItem extends Component {
 let emailText = (props, key) => {
 	let emailReg = /^(\w)+(\.\w+)*@(\w)+((\.\w{2,3}){1,3})$/;
 	if(props[key]){
-		console.log(key, props);
 		if(!emailReg.test(props[key])){
 			return new Error(
 				`${key} in ${props} is not email`

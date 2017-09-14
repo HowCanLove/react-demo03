@@ -110,26 +110,30 @@ import ReactDOM from 'react-dom';
 import ContactsApp from "./ContactsApp";
 import "./ContactsApp.css";
 import 'whatwg-fetch';
+const API_URL = "http://kanbanapi.pro-react.com";
+const API_HEADER = {
+	'Content-Type':'application/json',
+	Authorization:'any-string-you-like'
+}
 
 class ContactsAppContainer extends Component {
-	
 	constructor() {
 		super();
 		this.state = {
 			contacts: [],
-			obj:["qqq"]
+			obj:["qqq"],
 		}
 	}
 	componentDidMount(){
-		// let obj = this.state.obj;
-		// // obj.push(123,"sadf");
+		var obj = this.state.obj;
+		obj.push(123,"sadf");
 
-		let obj = this.state.obj.concat(["qweqwe","1213"]);
+		// var obj = this.state.obj.concat(["qweqwe","1213"]);
+		var obj = Object.assign({}, this.state.obj, {flightNo: 1010});
 		this.setState({obj: obj});
-		fetch("./Contacts.json")
+		fetch('Contacts.json', {headers: API_HEADER})
 			.then(response => response.json())
 			.then(responseData => {
-				console.log(this.state.obj);
 				this.setState({
 					contacts: responseData
 				})
@@ -139,6 +143,7 @@ class ContactsAppContainer extends Component {
 			})
 	}
 	render(){
+				console.log(this.state);
 		return (
 				<ContactsApp contacts={this.state.contacts} />
 			)
